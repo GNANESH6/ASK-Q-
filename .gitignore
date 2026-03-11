@@ -1,0 +1,36 @@
+# Root gitignore for ASK-Q
+
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Environment
+.env
+.env.local
+**/.env
+**/.env.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Uploads (user files)
+backend/uploads/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+
+# Build
+dist/
+build/
+**/dist/
+**/build/
+
+# Cache
+.cache/
+**/.cache/
