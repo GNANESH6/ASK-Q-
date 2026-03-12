@@ -9,10 +9,6 @@ function ViewPosts() {
   const [commentInputs, setCommentInputs] = useState({});
   const { user } = useContext(AuthContext);
 
-  useEffect(() => {
-    fetchPosts();
-  }, [filters]);
-
   const fetchPosts = async () => {
     try {
       const res = await axios.get('/posts', { params: filters });
@@ -21,6 +17,25 @@ function ViewPosts() {
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    const abortController = new AbortController();
+
+    const fetchPostsWithAbort = async () => {
+      try {
+        const res = await axios.get('/posts', { params: filters, signal: abortController.signal });
+        setPosts(res.data);
+      } catch (err) {
+        if (err.name !== 'CanceledError') {
+          console.error(err);
+        }
+      }
+    };
+
+    fetchPostsWithAbort();
+
+    return () => abortController.abort();
+  }, [filters]);
 
   const handleFilterChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
