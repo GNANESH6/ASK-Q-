@@ -50,7 +50,7 @@ function Login() {
         <button type="submit" className="btn btn-primary">Login</button>
       </form>
       <div className="text-center mt-4">
-        <Link to="/forgot-password" className="auth-link">Forgot Password?</Link>
+        {/* <Link to="/forgot-password" className="auth-link">Forgot Password?</Link> */}
         <br/><br/>
         Don't have an account? <Link to="/register" className="auth-link">Register</Link>
       </div>
