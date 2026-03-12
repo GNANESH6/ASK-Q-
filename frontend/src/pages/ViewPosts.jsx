@@ -14,26 +14,26 @@ function ViewPosts() {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    fetchPosts();
-  }, [filters]);
+    const fetchPosts = async () => {
+      try {
+        const res = await axios.get("/posts", { params: filters });
 
-  const fetchPosts = async () => {
-    try {
-      const res = await axios.get("/posts", { params: filters });
-
-      // Handle different backend response formats safely
-      if (Array.isArray(res.data)) {
-        setPosts(res.data);
-      } else if (Array.isArray(res.data.posts)) {
-        setPosts(res.data.posts);
-      } else {
+        // Handle different backend response formats safely
+        if (Array.isArray(res.data)) {
+          setPosts(res.data);
+        } else if (Array.isArray(res.data.posts)) {
+          setPosts(res.data.posts);
+        } else {
+          setPosts([]);
+        }
+      } catch (err) {
+        console.error("Error fetching posts:", err);
         setPosts([]);
       }
-    } catch (err) {
-      console.error("Error fetching posts:", err);
-      setPosts([]);
-    }
-  };
+    };
+
+    fetchPosts();
+  }, [filters]);
 
   const handleFilterChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
@@ -44,7 +44,7 @@ function ViewPosts() {
 
     try {
       await axios.delete(`/posts/${postId}`);
-      fetchPosts();
+      setPosts();
     } catch (err) {
       console.error("Delete failed:", err);
     }
