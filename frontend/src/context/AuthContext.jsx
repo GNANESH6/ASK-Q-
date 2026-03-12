@@ -1,16 +1,17 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Configure axios defaults
-  axios.defaults.baseURL = 'http://localhost:5000/api';
-
   useEffect(() => {
+    // Configure axios defaults
+    axios.defaults.baseURL = 'https://ask-q.onrender.com/api';
+    
     const checkLoggedin = async () => {
       const token = localStorage.getItem('token');
       if (token) {

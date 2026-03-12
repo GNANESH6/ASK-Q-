@@ -112,12 +112,12 @@ function ViewPosts() {
           
           {post.fileUrl && (
             <div className="post-attachment">
-              <a href={`http://localhost:5000${post.fileUrl}`} target="_blank" rel="noreferrer" style={{ color: 'var(--primary-orange)', textDecoration: 'none', fontWeight: '500' }}>
+              <a href={`https://ask-q.onrender.com${post.fileUrl}`} target="_blank" rel="noreferrer" style={{ color: 'var(--primary-orange)', textDecoration: 'none', fontWeight: '500' }}>
                 📎 {post.fileName || 'View Attachment'}
               </a>
               {post.fileUrl.match(/\.(jpeg|jpg|gif|png)$/i) && (
                 <div>
-                  <img src={`http://localhost:5000${post.fileUrl}`} alt="attachment" className="post-image" />
+                  <img src={`https://ask-q.onrender.com${post.fileUrl}`} alt="attachment" className="post-image" />
                 </div>
               )}
             </div>

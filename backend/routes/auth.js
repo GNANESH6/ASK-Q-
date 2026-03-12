@@ -137,7 +137,7 @@ router.post('/forgot-password', async (req, res) => {
     user.resetTokenExpiry = Date.now() + 3600000; // 1 hour
     await user.save();
     
-    const resetUrl = `http://localhost:5173/reset-password/${token}`;
+    const resetUrl = `https://ask-q-six.vercel.app/reset-password/${token}`;
     
     const mailOptions = {
       from: 'support@ask-q.com',
