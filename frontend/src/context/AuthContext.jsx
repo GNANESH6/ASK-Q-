@@ -1,5 +1,5 @@
-import React, { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { createContext, useState, useEffect } from "react";
+import axios from "axios";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext();
@@ -9,22 +9,24 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Configure axios defaults
-    axios.defaults.baseURL = 'https://ask-q.onrender.com/api';
-    
+    axios.defaults.baseURL = "https://ask-q.onrender.com/api";
+
     const checkLoggedin = async () => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
+
       if (token) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
         try {
-          const res = await axios.get('/auth/profile');
+          const res = await axios.get("/auth/profile");
           setUser(res.data);
         } catch (err) {
           console.error(err);
-          localStorage.removeItem('token');
-          delete axios.defaults.headers.common['Authorization'];
+          localStorage.removeItem("token");
+          delete axios.defaults.headers.common["Authorization"];
         }
       }
+
       setLoading(false);
     };
 
@@ -32,24 +34,30 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    const res = await axios.post('/auth/login', { email, password });
-    localStorage.setItem('token', res.data.token);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
+    const res = await axios.post("/auth/login", { email, password });
+
+    localStorage.setItem("token", res.data.token);
+
+    axios.defaults.headers.common["Authorization"] =
+      `Bearer ${res.data.token}`;
+
     setUser(res.data.user);
   };
 
   const register = async (userData) => {
-    await axios.post('/auth/register', userData);
+    await axios.post("/auth/register", userData);
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    delete axios.defaults.headers.common['Authorization'];
+    localStorage.removeItem("token");
+    delete axios.defaults.headers.common["Authorization"];
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, login, register, logout, loading }}>
+    <AuthContext.Provider
+      value={{ user, setUser, login, register, logout, loading }}
+    >
       {!loading && children}
     </AuthContext.Provider>
   );
